@@ -1,6 +1,6 @@
 import request from "supertest";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { createApp } from "../src/app";
+import { createApp } from "../src/createApp";
 import { signToken } from "../src/utils/jwt";
 
 vi.mock("../src/services/authService", () => ({

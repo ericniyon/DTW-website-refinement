@@ -1,23 +1,27 @@
-import { createApp } from "./app";
+import { createApp } from "./createApp";
 import { env } from "./config/env";
 import { prisma } from "./db/prisma";
 import { warnIfCloudinaryMisconfigured } from "./services/cloudinaryService";
 
 const app = createApp();
 
-const server = app.listen(env.PORT, () => {
-  console.log(`Backend listening on port ${env.PORT}`);
-  if (env.NODE_ENV === "development") {
-    void warnIfCloudinaryMisconfigured();
-  }
-});
+export default app;
 
-async function shutdown() {
-  server.close(async () => {
-    await prisma.$disconnect();
-    process.exit(0);
+if (!process.env.VERCEL) {
+  const server = app.listen(env.PORT, () => {
+    console.log(`Backend listening on port ${env.PORT}`);
+    if (env.NODE_ENV === "development") {
+      void warnIfCloudinaryMisconfigured();
+    }
   });
-}
 
-process.on("SIGINT", shutdown);
-process.on("SIGTERM", shutdown);
+  async function shutdown() {
+    server.close(async () => {
+      await prisma.$disconnect();
+      process.exit(0);
+    });
+  }
+
+  process.on("SIGINT", shutdown);
+  process.on("SIGTERM", shutdown);
+}

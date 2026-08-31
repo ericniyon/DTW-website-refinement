@@ -28,6 +28,16 @@ TypeScript + Express + Prisma + PostgreSQL backend for CMS content and admin aut
 - `npm run seed` - Seed admin + default site content
 - `npm run test` - Run API tests
 
+## Deploy on Vercel
+
+This package is the **backend** Vercel project. In the Vercel dashboard, import
+the GitHub repo and set **Root Directory** to `backend`. Express is detected
+from `src/server.ts`. Set the variables in `.env.example` (use a pooled
+Postgres `DATABASE_URL`). Then run `npx prisma migrate deploy` and `npm run seed`
+against that database.
+
+See the root README for creating the matching frontend project.
+
 ## API
 
 - `POST /api/auth/login`

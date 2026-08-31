@@ -77,6 +77,49 @@ Deployment expects an SPA fallback so client-side routes resolve on refresh;
 `vercel.json` provides this on Vercel. On other hosts, rewrite unknown paths to
 `/index.html`.
 
+## Deploy on Vercel
+
+This repo is a monorepo. Create **two** Vercel projects from the same GitHub
+repository ([sauverpro/dtw-platform](https://github.com/sauverpro/dtw-platform)):
+
+### 1. PostgreSQL
+
+The API needs a hosted Postgres database (Neon, Supabase, or Vercel Postgres).
+Use a **pooled** connection string for `DATABASE_URL` (Neon: the URL with
+`-pooler` in the host). After the first deploy, apply schema and seed from a
+machine that has the production URL:
+
+```bash
+cd backend
+npx prisma migrate deploy
+npm run seed
+```
+
+### 2. Backend project
+
+- **Root Directory:** `backend`
+- **Framework:** Express (auto-detected from `src/server.ts`)
+- Environment variables from `backend/.env.example`: `DATABASE_URL`,
+  `JWT_SECRET` (16+ characters), `JWT_EXPIRES_IN`, `CORS_ORIGIN` (must include
+  the frontend origin, e.g. `https://<frontend>.vercel.app`), `ADMIN_EMAIL`,
+  `ADMIN_PASSWORD`, SendGrid values, and Cloudinary values.
+
+Note the production URL, e.g. `https://dtw-platform-api.vercel.app`. Health
+check: `https://<backend>.vercel.app/api/health`.
+
+### 3. Frontend project
+
+- **Root Directory:** `.` (repo root)
+- **Framework:** Vite (auto-detected)
+- Environment variables from `.env.example`:
+  - `VITE_API_BASE_URL` = `https://<backend>.vercel.app/api`
+  - `VITE_REGISTRATION_SCRIPT_URL` — Google Apps Script web app URL
+
+SPA refreshes are handled by the root `vercel.json` rewrite to `index.html`.
+
+After the frontend URL is known, add it to the backend `CORS_ORIGIN` and
+redeploy the backend.
+
 ## Backend
 
 Express + Prisma service providing sponsorship content, admin auth, and package
@@ -104,4 +147,5 @@ npm run seed
 npm test
 ```
 
-A `Dockerfile` is included for container deployments.
+A `Dockerfile` is included for container deployments. For Vercel, see
+**Deploy on Vercel** above.
