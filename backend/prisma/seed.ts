@@ -17,15 +17,32 @@ async function main() {
   const defaultJsonPath = path.resolve(__dirname, "default-site-content.json");
   const defaultContent = JSON.parse(await readFile(defaultJsonPath, "utf-8"));
 
-  await prisma.siteContent.upsert({
-    where: { key: "main" },
-    update: {},
-    create: {
-      key: "main",
-      content: defaultContent,
-      version: 1
-    }
-  });
+  const existing = await prisma.siteContent.findUnique({ where: { key: "main" } });
+  if (!existing) {
+    await prisma.siteContent.create({
+      data: {
+        key: "main",
+        content: defaultContent,
+        version: 1,
+      },
+    });
+  } else {
+    const current =
+      existing.content && typeof existing.content === "object" && !Array.isArray(existing.content)
+        ? (existing.content as Record<string, unknown>)
+        : {};
+    await prisma.siteContent.update({
+      where: { key: "main" },
+      data: {
+        content: {
+          ...defaultContent,
+          ...current,
+          packages: defaultContent.packages,
+        },
+        version: { increment: 1 },
+      },
+    });
+  }
 
   console.log("Seed complete");
 }

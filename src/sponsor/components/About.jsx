@@ -50,18 +50,19 @@ export default function About() {
               {about.bullets.map((b, i) => (
                 <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '9px', fontSize: '12.5px', color: 'var(--lt2)', fontWeight: 500 }}>
                   <span style={{ color: 'var(--gold)', flexShrink: 0, fontSize: '11px', marginTop: '2px' }}>—</span>
-                  {b}
+                  <b style={{ fontWeight: 600 }}>{b}</b>
+
                 </li>
               ))}
             </ul>
-            <div style={{ marginTop: '28px', background: 'var(--gold-bg)', borderLeft: '2px solid var(--gold)', padding: '13px 18px', display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
+            {/* <div style={{ marginTop: '28px', background: 'var(--gold-bg)', borderLeft: '2px solid var(--gold)', padding: '13px 18px', display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
               {about.dates.map((d, i) => (
                 <div key={i}>
                   <strong style={{ display: 'block', fontSize: '13px', fontWeight: 800, color: 'var(--lt)' }}>{d.value}</strong>
                   <span style={{ fontSize: '8.5px', letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--lt3)', fontWeight: 600 }}>{d.label}</span>
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
