@@ -24,14 +24,14 @@ export default function About() {
               />
               <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'linear-gradient(180deg, rgba(15,15,15,0.12) 0%, transparent 35%, transparent 65%, rgba(244,242,236,0.25) 100%)' }} aria-hidden />
             </div>
-            <div className="about-float" style={{ position: 'absolute', bottom: '14px', left: '14px', background: 'var(--white)', border: '1px solid var(--lb)', padding: '11px 14px', borderRadius: '2px', boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
+            {/* <div className="about-float" style={{ position: 'absolute', bottom: '14px', left: '14px', background: 'var(--white)', border: '1px solid var(--lb)', padding: '11px 14px', borderRadius: '2px', boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
               <div style={{ fontSize: '14px', fontWeight: 900, color: 'var(--lt)', lineHeight: 1 }}>{about.eventDate}</div>
               <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--lt3)' }}>Event Date</div>
             </div>
             <div className="about-float" style={{ position: 'absolute', top: '20px', right: '14px', background: 'var(--white)', border: '1px solid var(--lb)', padding: '11px 14px', borderRadius: '2px', boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
               <div style={{ fontSize: '14px', fontWeight: 900, color: 'var(--lt)', lineHeight: 1 }}>{about.location}</div>
               <div style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--lt3)' }}>{about.venue}</div>
-            </div>
+            </div> */}
           </div>
 
           {/* Content */}
