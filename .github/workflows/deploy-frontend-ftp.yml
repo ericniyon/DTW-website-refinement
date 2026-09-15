@@ -46,5 +46,7 @@ jobs:
           port: 21
           protocol: ftp
           local-dir: ./dist/
-          server-dir: /home/ictchamber/dtw.ictchamber.rw/dtwictchamber/
+          # FTP user is already chrooted to the subdomain document root.
+          # Absolute cPanel paths nest files under home/... and cause LiteSpeed 404.
+          server-dir: ./
           dangerous-clean-slate: false
